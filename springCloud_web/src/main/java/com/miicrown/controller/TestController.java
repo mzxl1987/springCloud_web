@@ -30,13 +30,11 @@ public class TestController {
 	@RequestMapping(path="/hello/{name}")
 	@ResponseBody
 	public Object hello(@PathVariable(value="name") String name){
-		System.out.println("hello");
 		return String.format(helloAnyone, name);
 	}
 	
 	@RequestMapping(path="/helloPage")
 	public Object hello(){
-		System.out.println("Hello Page");
 		return "hello";
 	}
 	
