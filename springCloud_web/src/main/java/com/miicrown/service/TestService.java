@@ -16,15 +16,15 @@ public class TestService {
 		this.restTemplate = restTemplate;
 	}
 	
-	@HystrixCommand(fallbackMethod="reliable")
+	@HystrixCommand(fallbackMethod="fallbackReadingList")
 	public String readingList(){
 		URI url = URI.create("http://localhost:8081/miicrown/test/hello/JackAndTom");
 		
 		return this.restTemplate.getForObject(url, String.class);
 	}
 	
-	public String reliable(){
-		return "Error:URL can not reach!";
+	public String fallbackReadingList(){
+		return "Error: Read List Fail!";
 	}
 	
 }

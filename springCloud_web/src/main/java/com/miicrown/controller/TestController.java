@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import com.miicrown.service.TestService;
 
 //@RestController
-@EnableCircuitBreaker
 @Controller
 @RequestMapping(path="/test")
 public class TestController {
