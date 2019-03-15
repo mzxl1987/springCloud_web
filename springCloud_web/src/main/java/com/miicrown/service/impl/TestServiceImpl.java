@@ -4,8 +4,11 @@ import java.net.URI;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.client.RestTemplate;
 
 import com.miicrown.entity.User;
@@ -16,6 +19,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @Service
 @Transactional
 public class TestServiceImpl implements TestService{
+	
+	private static final Logger log = LoggerFactory.getLogger(TestServiceImpl.class);
 	
 	private final RestTemplate restTemplate;
 	
@@ -38,10 +43,12 @@ public class TestServiceImpl implements TestService{
 	}
 	
 	public void saveUser(){
+		
 		User u = new User();
 		u.setId("" + System.nanoTime());
-		u.setUsername("Hello");
+		u.setUsername("HelloA");
 		userRepository.save(u);
+			
 	}
-	
+		
 }

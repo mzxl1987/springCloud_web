@@ -20,7 +20,7 @@ public class BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(length=50)
+	@Column(length=50,unique=true,nullable=false)
 	private String id;
 	
 	@JsonIgnore
