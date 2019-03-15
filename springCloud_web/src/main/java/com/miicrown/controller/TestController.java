@@ -31,7 +31,12 @@ public class TestController {
 	@ResponseBody
 	public Object hello(@PathVariable(value="name") String name){
 		
-		testService.saveUser();
+		try {
+			testService.saveUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return String.format(helloAnyone, name);
 	}

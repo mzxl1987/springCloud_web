@@ -1,6 +1,7 @@
 package com.miicrown.service.impl;
 
 import java.net.URI;
+import java.sql.SQLException;
 
 import javax.transaction.Transactional;
 
@@ -41,14 +42,17 @@ public class TestServiceImpl implements TestService{
 	public String fallbackReadingList(){
 		return "Error: Read List Fail!";
 	}
-	
-	public void saveUser(){
 		
-		User u = new User();
-		u.setId("" + System.nanoTime());
-		u.setUsername("HelloA");
-		userRepository.save(u);
-			
+	public void saveUser() throws Exception{
+//		User u = new User();
+//		u.setId("" + System.nanoTime());
+//		u.setUsername("HelloA" + System.nanoTime());
+//		userRepository.save(u);
+		
+		User us = new User();
+		us.setId("" + System.nanoTime());
+		us.setUsername("HelloA");
+		userRepository.save(us);
 	}
 		
 }
