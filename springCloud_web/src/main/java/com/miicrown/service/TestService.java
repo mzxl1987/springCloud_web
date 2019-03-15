@@ -6,4 +6,5 @@ public interface TestService {
 	
 	public String fallbackReadingList();
 	
+	public void saveUser();
 }

@@ -2,16 +2,25 @@ package com.miicrown.service.impl;
 
 import java.net.URI;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.miicrown.entity.User;
+import com.miicrown.repository.UserRepository;
 import com.miicrown.service.TestService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Service
+@Transactional
 public class TestServiceImpl implements TestService{
 	
 	private final RestTemplate restTemplate;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	public TestServiceImpl(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
@@ -26,6 +35,13 @@ public class TestServiceImpl implements TestService{
 	
 	public String fallbackReadingList(){
 		return "Error: Read List Fail!";
+	}
+	
+	public void saveUser(){
+		User u = new User();
+		u.setId("" + System.nanoTime());
+		u.setUsername("Hello");
+		userRepository.save(u);
 	}
 	
 }

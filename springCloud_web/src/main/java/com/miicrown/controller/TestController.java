@@ -30,6 +30,9 @@ public class TestController {
 	@RequestMapping(path="/hello/{name}")
 	@ResponseBody
 	public Object hello(@PathVariable(value="name") String name){
+		
+		testService.saveUser();
+		
 		return String.format(helloAnyone, name);
 	}
 	
