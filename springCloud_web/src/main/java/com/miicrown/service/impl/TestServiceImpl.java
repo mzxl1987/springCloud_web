@@ -18,7 +18,7 @@ import com.miicrown.service.TestService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Service
-@Transactional
+@Transactional(rollbackOn=Exception.class)
 public class TestServiceImpl implements TestService{
 	
 	private static final Logger log = LoggerFactory.getLogger(TestServiceImpl.class);
@@ -44,11 +44,6 @@ public class TestServiceImpl implements TestService{
 	}
 		
 	public void saveUser() throws Exception{
-//		User u = new User();
-//		u.setId("" + System.nanoTime());
-//		u.setUsername("HelloA" + System.nanoTime());
-//		userRepository.save(u);
-		
 		User us = new User();
 		us.setId("" + System.nanoTime());
 		us.setUsername("HelloA");
