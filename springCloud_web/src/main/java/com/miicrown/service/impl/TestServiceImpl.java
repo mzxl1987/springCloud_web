@@ -47,7 +47,12 @@ public class TestServiceImpl implements TestService{
 		User us = new User();
 		us.setId("" + System.nanoTime());
 		us.setUsername("HelloA");
-		userRepository.save(us);
+		
+		try{
+			userRepository.save(us);
+		}catch(Exception e){
+			throw new Exception();
+		}
 	}
 		
 }

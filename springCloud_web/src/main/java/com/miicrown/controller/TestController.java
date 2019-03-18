@@ -29,14 +29,14 @@ public class TestController {
 	
 	@RequestMapping(path="/hello/{name}")
 	@ResponseBody
-	public Object hello(@PathVariable(value="name") String name){
+	public Object hello(@PathVariable(value="name") String name) throws Exception{
 		
-		try {
+		//try {
 			testService.saveUser();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return String.format(helloAnyone, name);
 	}
