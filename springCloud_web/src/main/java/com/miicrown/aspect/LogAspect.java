@@ -84,7 +84,7 @@ public class LogAspect {
         try {
             logger.info("开始: " + pjp.getSignature() + " 参数：" + Lists.newArrayList(pjp.getArgs()).toString());
             result = pjp.proceed(pjp.getArgs());
-            logger.info("结束: " + pjp.getSignature() + "， 返回值：" + result.toString());
+            logger.info("结束: " + pjp.getSignature() + "， 返回值：" + result);
             logger.info("耗时：" + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS) + "(毫秒).");
         } catch (Throwable throwable) {
             result = handlerException(pjp, throwable);

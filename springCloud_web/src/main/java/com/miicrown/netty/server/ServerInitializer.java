@@ -1,5 +1,8 @@
 package com.miicrown.netty.server;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.miicrown.netty.protocol.ProtocolDecoder;
 import com.miicrown.netty.protocol.ProtocolEncoder;
 import com.miicrown.netty.scheduler.CancelableScheduler;
@@ -10,12 +13,11 @@ import io.netty.channel.ChannelInitializer;
 
 public class ServerInitializer extends ChannelInitializer<Channel> {
 	
-	private CancelableScheduler scheduler = new HashedWheelTimeoutScheduler();
-	
+	@Autowired
 	private EchoServerHandler echoServerHandler;
 	
 	public void start(){
-		echoServerHandler = new EchoServerHandler(scheduler);
+		echoServerHandler = new EchoServerHandler();
 	}
 	
 	@Override

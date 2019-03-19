@@ -5,12 +5,19 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.miicrown.config.ApplicationContextProvider;
 import com.miicrown.netty.protocol.LoginProtocol;
 import com.miicrown.netty.protocol.Protocol;
 import com.miicrown.netty.protocol.ResponseProtocol;
 import com.miicrown.netty.scheduler.CancelableScheduler;
+import com.miicrown.netty.scheduler.HashedWheelTimeoutScheduler;
 import com.miicrown.netty.scheduler.SchedulerKey;
+import com.miicrown.service.TestService;
+import com.miicrown.service.impl.TestServiceImpl;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -24,11 +31,13 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 	private static final Logger log = LoggerFactory.getLogger(EchoServerHandler.class);
 	private static final int HEARTBEAT_TIMEOUT = 60;  //心跳超时时间 60s
 	private static final Object MAP_VALUE = new Object();
-	private final Map<Channel, Object> clients = PlatformDependent.newConcurrentHashMap();
-	private final CancelableScheduler disconnectScheduler;
+	public static final Map<Channel, Object> clients = PlatformDependent.newConcurrentHashMap();
+	public static final CancelableScheduler disconnectScheduler = new HashedWheelTimeoutScheduler();
 	
-	public EchoServerHandler(CancelableScheduler scheduler) {
-		this.disconnectScheduler = scheduler;
+	public TestService testService;
+	
+	public EchoServerHandler() {
+		this.testService = ApplicationContextProvider.getBean(TestService.class);
 	}
 	
 	@Override
@@ -62,6 +71,8 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 		if(msg instanceof LoginProtocol){
 			
 			log.info( "{} , Message : {} ",ctx.channel().id().asLongText(),msg);
+			
+			testService.saveUser();
 			
 			Protocol response = null;
 			

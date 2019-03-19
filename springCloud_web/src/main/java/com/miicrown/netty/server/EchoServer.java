@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -18,6 +19,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
 
+@Component
 public class EchoServer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(EchoServer.class);
@@ -66,7 +68,7 @@ public class EchoServer {
 		return b.bind(addr).addListener(new FutureListener<Void>() {
 			public void operationComplete(Future<Void> future) throws Exception {
 				if(future.isSuccess()){
-					logger.info("TCP Server 启动[成功], TPC://{}:{}",configCopy.getHost(),configCopy.getPort());
+					logger.info("TCP Server 启动[成功], TCP://{}:{}",configCopy.getHost(),configCopy.getPort());
 				}else{
 					logger.error("TCP Server 启动[X失败X], TCP://{}:{}",configCopy.getHost(),configCopy.getPort());
 				}

@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.miicrown.service.TestService;
 
-//@RestController
 @Controller
 @RequestMapping(path="/test")
 public class TestController {
@@ -21,22 +20,12 @@ public class TestController {
 	
 	@Autowired
 	private TestService testService;
-	
-	@Bean
-	public RestTemplate rest(RestTemplateBuilder builder){
-		return builder.build();
-	}
-	
+		
 	@RequestMapping(path="/hello/{name}")
 	@ResponseBody
 	public Object hello(@PathVariable(value="name") String name) throws Exception{
 		
-		//try {
-			testService.saveUser();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		testService.saveUser();
 		
 		return String.format(helloAnyone, name);
 	}

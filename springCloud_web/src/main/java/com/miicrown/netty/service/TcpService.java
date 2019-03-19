@@ -3,31 +3,25 @@ package com.miicrown.netty.service;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.miicrown.netty.server.Configuration;
 import com.miicrown.netty.server.EchoServer;
 
 @Service
 public class TcpService {
 
-	public EchoServer server;
+	@Autowired
+	public EchoServer echoServer;
 	
 	@PostConstruct
 	public void InitTcpServer(){
-		
-		Configuration configuration = Configuration.createInstance();
-    	configuration.setHost("127.0.0.1");
-    	configuration.setPort(7005);
-    	
-    	this.server = new EchoServer(configuration);
-    	this.server.start();
-		
+    	this.echoServer.start();
 	}
 
 	@PreDestroy
 	public void destory(){
-		this.server.stop();
+		this.echoServer.stop();
 	}
 	
 }

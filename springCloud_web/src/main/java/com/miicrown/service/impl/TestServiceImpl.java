@@ -1,7 +1,6 @@
 package com.miicrown.service.impl;
 
 import java.net.URI;
-import java.sql.SQLException;
 
 import javax.transaction.Transactional;
 
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.client.RestTemplate;
 
 import com.miicrown.entity.User;
@@ -21,9 +19,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @Transactional(rollbackOn=Exception.class)
 public class TestServiceImpl implements TestService{
 	
-	private static final Logger log = LoggerFactory.getLogger(TestServiceImpl.class);
-	
-	private final RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -46,13 +43,11 @@ public class TestServiceImpl implements TestService{
 	public void saveUser() throws Exception{
 		User us = new User();
 		us.setId("" + System.nanoTime());
-		us.setUsername("HelloA");
+//		us.setUsername("HelloA");
+		us.setUsername("HelloA_" + System.nanoTime());
 		
-		try{
-			userRepository.save(us);
-		}catch(Exception e){
-			throw new Exception();
-		}
+		userRepository.save(us);
+		
 	}
 		
 }
