@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,7 +22,7 @@ public class TestController {
 	@Autowired
 	private TestService testService;
 		
-	@RequestMapping(path="/hello/{name}")
+	@RequestMapping(path="/hello/{name}", method = RequestMethod.POST)
 	@ResponseBody
 	public Object hello(@PathVariable(value="name") String name) throws Exception{
 		
@@ -30,12 +31,12 @@ public class TestController {
 		return String.format(helloAnyone, name);
 	}
 	
-	@RequestMapping(path="/helloPage")
+	@RequestMapping(path="/helloPage", method = RequestMethod.GET)
 	public Object hello(){
 		return "hello";
 	}
 	
-	@RequestMapping(path="/toRead")
+	@RequestMapping(path="/toRead", method = RequestMethod.GET)
 	@ResponseBody
 	public Object toRead(){
 		return testService.readingList(); 

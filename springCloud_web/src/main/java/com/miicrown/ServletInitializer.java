@@ -1,4 +1,4 @@
-package com.miicrown.demo;
+package com.miicrown;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
