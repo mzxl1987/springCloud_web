@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Welcome</title>
 </head>
 <body>
-	<h1>Hello ,Anyone</h1>
+	<h1>Hello ,<span th:text="查询用户"></span></h1>
+	<span th:each="u:${users}">
+		<div th:text="${u.username}"></div>
+	</span>
 </body>
 </html>

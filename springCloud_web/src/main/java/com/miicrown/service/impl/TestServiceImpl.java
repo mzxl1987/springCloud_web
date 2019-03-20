@@ -1,16 +1,20 @@
 package com.miicrown.service.impl;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.miicrown.entity.User;
+import com.miicrown.entity.dto.UserDto;
 import com.miicrown.repository.UserRepository;
 import com.miicrown.service.TestService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -48,6 +52,19 @@ public class TestServiceImpl implements TestService{
 		
 		userRepository.save(us);
 		
+	}
+		
+	public List<UserDto> findUsers(String username) throws Exception {
+		List<User> users = userRepository.findAllByName(username);
+		List<UserDto> dtos = new ArrayList<>();
+		
+		users.stream().forEach(user -> {
+			UserDto ud = new UserDto();
+			BeanUtils.copyProperties(user, ud);
+			dtos.add(ud);
+		});
+		
+		return dtos;
 	}
 		
 }

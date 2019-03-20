@@ -1,10 +1,13 @@
 package com.miicrown.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +16,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.miicrown.service.TestService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 @RequestMapping(path="/test")
+@Api(value="Test Controller")
 public class TestController {
 
 	private static String helloAnyone = "Hello, %s !";
@@ -31,8 +40,15 @@ public class TestController {
 		return String.format(helloAnyone, name);
 	}
 	
-	@RequestMapping(path="/helloPage", method = RequestMethod.GET)
-	public Object hello(){
+	@ApiOperation(value="跳转页面", notes="带有参数的页面跳转")
+	@ApiImplicitParams({
+		@ApiImplicitParam(value="用户名", name="username", required=true)
+	})
+	@RequestMapping(path="/helloPage/{username}", method = RequestMethod.GET)
+	public Object hello(@PathVariable(value="username") String username, ModelMap map,HttpServletRequest request) throws Exception{
+		
+		map.addAttribute("users", testService.findUsers(username));
+		
 		return "hello";
 	}
 	
