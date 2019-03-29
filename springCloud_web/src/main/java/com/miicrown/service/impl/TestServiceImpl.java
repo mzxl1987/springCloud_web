@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,6 +26,9 @@ public class TestServiceImpl implements TestService{
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -50,7 +54,8 @@ public class TestServiceImpl implements TestService{
 //		us.setUsername("HelloA");
 		us.setUsername("HelloA_" + System.nanoTime());
 		
-		userRepository.save(us);
+		//userRepository.save(us);
+		jdbcTemplate.execute("update t_user t set t.username = 'a'");
 		
 	}
 		
