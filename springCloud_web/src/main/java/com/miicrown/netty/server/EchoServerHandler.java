@@ -1,6 +1,8 @@
 package com.miicrown.netty.server;
 
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -33,6 +35,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 	private static final Object MAP_VALUE = new Object();
 	public static final Map<Channel, Object> clients = PlatformDependent.newConcurrentHashMap();
 	public static final CancelableScheduler disconnectScheduler = new HashedWheelTimeoutScheduler();
+	public static final BlockingQueue<String> a = new LinkedBlockingQueue<>();
 	
 	public TestService testService;
 	

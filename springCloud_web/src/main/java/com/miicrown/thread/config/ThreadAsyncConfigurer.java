@@ -14,7 +14,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class ThreadAsyncConfigurer implements AsyncConfigurer {
 	@Bean
 	@Override
-	public Executor getAsyncExecutor() {
+	public ThreadPoolTaskExecutor getAsyncExecutor() {
 		ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
 		// 设置核心线程数
 		threadPool.setCorePoolSize(10);
