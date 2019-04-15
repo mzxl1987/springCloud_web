@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
 @Component
-@EnableScheduling
-@EnableKafka
+//@EnableScheduling
+//@EnableKafka
 public class KafkaProducer {
 
 	private Logger log = LoggerFactory.getLogger(KafkaProducer.class);
@@ -22,7 +22,7 @@ public class KafkaProducer {
 	@Autowired
 	private KafkaTemplate kafkaTemplate;
 	
-	@Scheduled(cron=" 00/1 * * * * ?")
+//	@Scheduled(cron=" 00/1 * * * * ?")
 	public void sendTestMsg(){
 		
 		String message = UUID.randomUUID().toString();
@@ -36,7 +36,7 @@ public class KafkaProducer {
 		
 	}
 	
-	@Scheduled(cron=" 00/5 * * * * ?")
+//	@Scheduled(cron=" 00/5 * * * * ?")
 	public void sendChatMsg(){
 		
 		String message = UUID.randomUUID().toString();

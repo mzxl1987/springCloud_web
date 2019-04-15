@@ -8,19 +8,19 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@EnableKafka
+//@EnableKafka
 public class KafkaConsumer {
 	
 	private Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 	
-	@KafkaListener(topics="test")
+//	@KafkaListener(topics="test")
 	public void listenerTest(ConsumerRecord<?, ?> record){
 		
 		log.info("Kafka接收消息 : TOPIC [ TEST ]   :  MSG [ {} ]",record.value());
 		
 	}
 	
-	@KafkaListener(topics="chat")
+//	@KafkaListener(topics="chat")
 	public void listenerChat(ConsumerRecord<?, ?> record){
 		
 		log.info("Kafka接收消息 : TOPIC [ CHAT ]   :  MSG [ {} ]",record.value());
