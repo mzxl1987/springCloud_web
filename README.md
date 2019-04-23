@@ -11,3 +11,4 @@ springCloud web 微服务架构
 # 8.Swagger
 # 9.Netty
 # 10.LOG4j
+# 11.RabbitMQ
