@@ -6,7 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.miicrown.util.CrcUtil;
+
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
@@ -20,27 +23,35 @@ public class ProtocolDecoder extends ByteToMessageDecoder {
 			while(bb.isReadable()){
 				Protocol pro = null;
 				final int head_1 = bb.readUnsignedByte();
-				if(head_1 == Protocol.HEAD && bb.readableBytes() >= Protocol.MINLENGTH){
-					final int length = bb.readUnsignedShort();
+				if(head_1 == Protocol.START && bb.readableBytes() >= Protocol.MINLENGTH){
+					final int length = bb.readUnsignedShortLE();
 					final int head_2 = bb.readUnsignedByte();
-					if(head_2 == Protocol.HEAD){
-						final int type = bb.readUnsignedShort();
+					if(head_2 == Protocol.START){
 						
-						switch (type){
-							case LoginProtocol.TYPE:                   pro = new LoginProtocol(type);            break;
-							case ResponseProtocol.TYPE:                pro = new ResponseProtocol(type);         break;
-						}
+						bb.markReaderIndex();
+						byte[] content = ByteBufUtil.getBytes(bb, bb.readerIndex(), length);
+						bb.readerIndex(bb.readerIndex() + length);
 						
-						if(null != pro){
-							pro.setContent(bb,length);
-							pro.setLength(length);
-							pro.takeVerification(bb);
+						int crc = bb.readUnsignedShortLE();
+						int end = bb.readByte();
+						if(end == Protocol.END && CrcUtil.check(content, crc)){
+							
+							bb.resetReaderIndex();
+							final int msgId = bb.readUnsignedShortLE();
+							
+							log.info("消息ID = {}",msgId);
+							
+							switch (ProtocolType.get(msgId)){
+								case LOGIN:                                   pro = new Protocol0x0001();            break;
+								case HEARTBEAT:                               pro = new Protocol0x0002();            break;
+								default:                                                                break;
+							}
+							
+							if(null != pro && pro.decode(bb,length)){
+								out.add(pro);
+							}
 						}
 					}
-				}
-				
-				if(null != pro){
-					out.add(pro);
 				}
 			}
 		}catch(Exception e){

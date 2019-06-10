@@ -7,19 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.miicrown.config.ApplicationContextProvider;
 import com.miicrown.netty.protocol.LoginProtocol;
-import com.miicrown.netty.protocol.Protocol;
-import com.miicrown.netty.protocol.ResponseProtocol;
 import com.miicrown.netty.scheduler.CancelableScheduler;
 import com.miicrown.netty.scheduler.HashedWheelTimeoutScheduler;
 import com.miicrown.netty.scheduler.SchedulerKey;
 import com.miicrown.service.TestService;
-import com.miicrown.service.impl.TestServiceImpl;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -77,12 +71,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 			
 			testService.saveUser();
 			
-			Protocol response = null;
-			
-			response = new ResponseProtocol(ResponseProtocol.TYPE);
-			response.setLength(3);
-			response.setContent(new byte[]{ (byte)0x88 ,(byte)0x89, (byte)0x90 });
-			response.encodeVerification(response.getContent());
+			//TODO
 			
 			disconnectScheduler.schedule(new SchedulerKey(SchedulerKey.Type.HEARTBEAT_TIMEOUT, ctx), new Runnable() {
 				@Override
@@ -93,9 +82,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter{
 				}
 			}, HEARTBEAT_TIMEOUT, TimeUnit.SECONDS);
 			
-			if(null != response){
-				ctx.writeAndFlush(response);
-			}
+			//TODO
 			
 		}else{
 			ctx.fireChannelRead(msg);

@@ -14,4 +14,7 @@ public interface UserRepository extends BaseRepository<User> {
 	@Query(value="from User u where 1 = 1 and u.username like %:username%")
 	public List<User> findAllByName(@Param("username") String username);
 	
+	@Query(value="from User u where 1 = 1 and u.username = :#{#v.username} and u.password = :#{#v.password}")
+	public List<User> Query(@Param("v") User u);
+	
 }

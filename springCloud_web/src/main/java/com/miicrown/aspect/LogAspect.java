@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
-import com.miicrown.entity.Result;
+import com.miicrown.entity.dto.Result;
 import com.miicrown.enums.ErrorCode;
 
 
