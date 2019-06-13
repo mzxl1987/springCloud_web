@@ -23,6 +23,9 @@ public class Producer {
 		log.info(" AMQP 发送 Direction 消息  ");
 	}	
 	
+	/**
+	 * 定时发送消息
+	 */
 	/****************************************     TOPIC MESSAGE    ***************************************/
 	@Scheduled(fixedDelay = 1000L)
 	public void SendMsg(){
