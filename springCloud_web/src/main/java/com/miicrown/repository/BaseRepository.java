@@ -8,6 +8,6 @@ import com.miicrown.entity.BaseEntity;
 
 @Repository
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseEntity> extends JpaRepository<T, Integer> {
+public interface BaseRepository<T> extends JpaRepository<T, Integer> {
 
 }

@@ -40,4 +40,10 @@ public class BaseDto implements Serializable {
 	
 	private String updateBy;
 	
+
+	public boolean isEmptyOrNull(Object obj){
+		return null == obj || obj == null || "".equals(obj);
+	}
+	
+	
 }
